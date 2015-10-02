@@ -1,30 +1,17 @@
 // BrokenStreetFighter
 // ADGS Game Jam - October 2015
-// Dean, Matt & Sydney
+// Dean, Matt & Sidney
 // ===============================
 // main.cpp
 
+#include "ApplicationDefines.h"
 #include <SFML/Graphics.hpp>
 
-int main()
+#include "Application.h"
+
+Application gameApp;
+
+void main()
 {
-    sf::RenderWindow window(sf::VideoMode(1024, 768), "Broken Street Fighter");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        window.clear();
-        window.draw(shape);
-        window.display();
-    }
-
-    return 0;
+	gameApp.Run();
 }

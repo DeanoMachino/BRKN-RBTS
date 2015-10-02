@@ -26,3 +26,7 @@
 *.exe
 *.out
 *.app
+
+# Random shite
+*.opensdf
+*.sdf
