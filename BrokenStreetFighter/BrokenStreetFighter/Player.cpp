@@ -60,16 +60,9 @@ void Player::InitialiseControls(InputHandler* hInput, int i) {
 }
 
 void Player::Update(InputHandler* hInput) {
-	//HandleInput(hInput);
-	if (hInput->isKeyDown(e_KEYBOARD, sf::Keyboard::A)) {
-		Move(e_LEFT);
-		currentAnimation = &walkBackwardsAni;
-	}
-	else currentAnimation = &deathAni;
-	animatedSprite.play(*currentAnimation);
-
+	HandleInput(hInput);
 	RepositionPlayer();
-
+	animatedSprite.play(*currentAnimation);
 }
 
 void Player::ChangeControls(InputHandler* hInput) {
