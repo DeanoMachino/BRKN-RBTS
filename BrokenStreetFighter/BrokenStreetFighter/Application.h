@@ -6,7 +6,7 @@
 
 #ifndef APPLICATION_H
 #define APPLICATION_H
-
+#include "ApplicationDefines.h"
 class Application {
 public:
 	Application();
@@ -18,10 +18,11 @@ protected:
 
 
 private:
+	e_GameState CurrentState;
 	void Initialise();
 	void GetInput();
-	void Process();
-	void Render();
+	void Process(e_GameState CurrentState);
+	void Render(e_GameState CurrentState);
 
 };
 
