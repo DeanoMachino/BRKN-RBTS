@@ -4,9 +4,6 @@
 // ===============================
 // main.cpp
 
-#include "ApplicationDefines.h"
-#include <SFML/Graphics.hpp>
-
 #include "Application.h"
 
 Application gameApp;

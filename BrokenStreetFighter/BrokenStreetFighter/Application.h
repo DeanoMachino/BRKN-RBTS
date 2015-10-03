@@ -8,6 +8,8 @@
 #define APPLICATION_H
 
 #include "ApplicationDefines.h"
+#include <SFML\Window.hpp>
+#include <SFML\Graphics.hpp>
 
 class Application {
 public:
@@ -22,15 +24,14 @@ protected:
 private:
 	e_GameState currentState;
 	void Initialise();
-	void ManageEvents();
-	void Process(e_GameState currentState);
-	void Render(e_GameState currentState);
+	void ManageEvents(sf::RenderWindow* window);
+	void Process(sf::RenderWindow* window);
+	void Render(sf::RenderWindow* window);
 
-	sf::ContextSettings settings;
-	sf::RenderWindow window;
+	void DetectCollisions();
 
 	InputHandler hInput;
-
+	int player[2];				// CHANGE TO TYPE PLAYER CLASS
 };
 
 #endif

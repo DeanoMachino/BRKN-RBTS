@@ -12,7 +12,8 @@
 
 
 // DEFINES
-
+#define	PLAYER_COUNT	2
+#define	CONTROL_DELAY	15
 
 
 
