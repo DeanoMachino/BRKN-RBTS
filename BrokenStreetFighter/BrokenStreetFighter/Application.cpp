@@ -24,7 +24,7 @@ void Application::Run() {
 			if(event.type == sf::Event::Closed)
 				window.close();
 		}
-
+		
 		switch (CurrentState){
 			case e_INITIALISE:
 				Initialise();

@@ -84,13 +84,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimatedSprite.cpp" />
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="GameObj.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimatedSprite.hpp" />
+    <ClInclude Include="Animation.hpp" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="ApplicationDefines.h" />
+    <ClInclude Include="GameObj.h" />
     <ClInclude Include="InputHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -5,7 +5,7 @@
 // Application.h
 
 #include "InputHandler.h"
-
+#include "GameObj.h"
 #ifndef APPLICATION_H
 #define APPLICATION_H
 #include "ApplicationDefines.h"
@@ -13,6 +13,7 @@ class Application {
 public:
 	Application();
 	~Application();
+
 
 	void Run();
 
@@ -25,7 +26,7 @@ private:
 	void GetInput();
 	void Process(e_GameState CurrentState);
 	void Render(e_GameState CurrentState);
-
+	GameObj Player;
 	InputHandler ih;
 
 };

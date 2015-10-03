@@ -7,8 +7,17 @@
 #ifndef APPLICATIONDEFINES_H
 #define APPLICATIONDEFINES_H
 
-// INCLUDES
+#include "InputHandler.h"
 
+// INCLUDES
+struct ControlLayout
+{
+	Key* Up;
+	Key* Left;
+	Key* Right;
+	Key* Punch;
+	Key* Block;
+};
 
 
 // DEFINES
