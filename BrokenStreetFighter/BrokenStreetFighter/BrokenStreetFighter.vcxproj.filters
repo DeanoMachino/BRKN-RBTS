@@ -41,6 +41,9 @@
     <ClCompile Include="Animation.cpp">
       <Filter>Source Files\System\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Game Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApplicationDefines.h">
@@ -60,6 +63,9 @@
     </ClInclude>
     <ClInclude Include="Animation.hpp">
       <Filter>Source Files\System\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Source Files\Game Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

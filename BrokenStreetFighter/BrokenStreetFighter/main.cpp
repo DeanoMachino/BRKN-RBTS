@@ -6,9 +6,7 @@
 
 #include "Application.h"
 
-Application gameApp;
-
-void main()
-{
+void main() {
+	Application gameApp;
 	gameApp.Run();
 }
