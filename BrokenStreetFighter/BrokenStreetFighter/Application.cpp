@@ -8,6 +8,7 @@
 
 Application::Application() {
 	Initialise();
+
 }
 
 Application::~Application() {
@@ -15,9 +16,12 @@ Application::~Application() {
 
 void Application::Run() {
 	sf::RenderWindow window(sf::VideoMode(1024, 768), "SFML works!");
-
+	window.setFramerateLimit(60);
+	//player[0].SetTexture();
+	player[0].SetUpSprite();
 	// Game loop
 	while(window.isOpen()) {
+		frameTime = frameClock.restart();
 		ManageEvents(&window);		// Get events (input, etc.)
 		Process(&window);			// Handle game logic, main mechanics
 		Render(&window);			// Display graphics
@@ -67,6 +71,7 @@ void Application::ManageEvents(sf::RenderWindow* window) {
 }
 
 void Application::Process(sf::RenderWindow* window) {
+
 	switch(currentState) {
 		case e_START:
 			// RETURN - Start game
@@ -126,28 +131,30 @@ void Application::Render(sf::RenderWindow* window) {
 			// Render foreground
 			shape.setFillColor(sf::Color::Green);
 			window->draw(shape);
-
+		
 			// Render UI
 
 			break;
 		case e_INGAME:
 			// Render background
-			shape.setFillColor(sf::Color::Blue);
-			
-
+			//shape.setFillColor(sf::Color::Blue);
 			// Render foreground
+			player[0].animatedSprite.update(frameTime);
+			//window->draw(shape);
+			window->draw(player[0].animatedSprite);
+			window->draw(player[0].player);
+			
 			for(int i = 0; i < PLAYER_COUNT; ++i) {
 				// render player
 			}
-			window->draw(shape);
-
+			
 			// Render UI
 
 			break;
 		case e_END:
 			// Render background
 			
-
+			
 			// Render foreground
 			window->draw(shape);
 
