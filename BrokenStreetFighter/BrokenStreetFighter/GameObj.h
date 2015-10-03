@@ -19,7 +19,7 @@ public:
 	GameObj();
 	~GameObj();
 
-	sf::Texture texture_;
+	//sf::Texture texture_;
 	sf::Vector2f Position;
 	float Width;
 	float Height;
