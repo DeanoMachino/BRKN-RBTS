@@ -19,6 +19,14 @@ public:
 	
 	void Update(InputHandler* hInput);
 	void ChangeControls(InputHandler* hInput);
+	void Knockback(e_Direction d, e_AttackType at);
+	void DepleteHealth(e_AttackType at);
+
+	AABB boundingBox;
+	e_AttackType attacking;
+	//bool justAttacked;
+	float attackDelay;
+	bool dead;
 
 protected:
 
@@ -29,11 +37,12 @@ private:
 	void HandleInput(InputHandler* hInput);
 	void RepositionPlayer();
 
+	void UpdateAABB();
+
 	void Move(e_Direction d);
 	void Jump();
 	void Attack(e_AttackType at);
 
-	//std::vector<ControlLayout
 	ControlLayout controls[CONTROL_LAYOUTS];
 	ControlLayout* currentControls;
 	int layout;
@@ -41,7 +50,8 @@ private:
 	sf::Vector2f velocity;
 
 	bool inAir;
-	bool attacking;
+	bool knockback;
+	int health;
 };
 
 #endif

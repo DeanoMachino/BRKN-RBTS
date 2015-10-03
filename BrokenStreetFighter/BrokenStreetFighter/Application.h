@@ -31,6 +31,7 @@ private:
 	void Render(sf::RenderWindow* window);
 
 	void DetectCollisions();
+	bool GetCollision(Player p1, Player p2);
 
 	InputHandler hInput;
 

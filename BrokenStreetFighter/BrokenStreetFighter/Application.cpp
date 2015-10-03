@@ -114,11 +114,34 @@ void Application::Process(sf::RenderWindow* window) {
 					Players[i].Update(&hInput);
 				}
 
+				if(Players[0].attacking || Players[1].attacking) {
+					if(Players[0].Position.x - (Players[0].Width / 2) > Players[1].Position.x + (Players[1].Width / 2)) {
+						// return false;
+					}
+					if(Players[0].Position.x + (Players[0].Width / 2) < Players[1].Position.x - (Players[1].Width / 2)) {
+						// return false;
+					}
+					if(Players[0].Position.y > Players[1].Position.y + (Players[1].Height / 2)) {
+						// return false;
+					}
+					if(Players[0].Position.y - (Players[0].Height / 2) > Players[1].Position.y + (Players[1].Height / 2)) {
+						// return false;
+					}
+				}
 
+
+				
 				// Collision detection here
 				// AABB
+				DetectCollisions();
 
-
+				if(Players[0].dead) {
+					currentState = e_END;
+					winState = e_PLAYER_1_WIN;
+				} else if(Players[1].dead) {
+					currentState = e_END;
+					winState = e_PLAYER_0_WIN;
+				}
 				// if timer == 0
 				// change control schemes (method within player class)
 
@@ -187,3 +210,39 @@ void Application::Render(sf::RenderWindow* window) {
 
 	window->display();
 }
+
+
+void Application::DetectCollisions() {
+	if(GetCollision(Players[0], Players[1])) {		// If collision
+		if(Players[0].attackDelay == 60 && Players[0].attacking != e_NO_ATTACK) {
+			// Damage enemy player
+			Players[1].DepleteHealth(Players[0].attacking);
+			// Knock player back
+			if(Players[0].boundingBox.min.x < Players[1].boundingBox.min.x) {
+				Players[1].Knockback(e_RIGHT, Players[1].attacking);
+			} else {
+				Players[1].Knockback(e_LEFT, Players[1].attacking);
+			}
+		}
+		if(Players[1].attackDelay == 60 && Players[1].attacking != e_NO_ATTACK) {
+			// Damage enemy player
+			Players[0].DepleteHealth(Players[1].attacking);
+			// Knock player back
+			if(Players[1].boundingBox.min.x < Players[0].boundingBox.min.x) {
+				Players[0].Knockback(e_RIGHT, Players[0].attacking);
+			} else {
+				Players[0].Knockback(e_LEFT, Players[0].attacking);
+			}
+		}
+	}
+}
+
+bool Application::GetCollision(Player p1, Player p2) {
+	if(p1.boundingBox.min.x > p2.boundingBox.max.x)	return false;
+	if(p1.boundingBox.max.x < p2.boundingBox.min.x)	return false;
+	if(p1.boundingBox.min.y > p2.boundingBox.max.y)	return false;
+	if(p1.boundingBox.max.y < p2.boundingBox.min.y)	return false;
+
+	return true;
+}
+
