@@ -21,13 +21,14 @@ struct ControlLayout
 
 
 // DEFINES
-
+#define	PLAYER_COUNT	2
+#define	CONTROL_DELAY	15
 
 
 
 // ENUMS
 enum e_GameState {
-	e_INITIALISE = 0, e_START, e_INGAME, e_END
+	e_START = 0, e_INGAME, e_END
 };
 
 
