@@ -6,9 +6,10 @@
 
 #include "Application.h"
 
-Application gameApp;
+
 
 void main()
 {
+	Application gameApp;
 	gameApp.Run();
 }

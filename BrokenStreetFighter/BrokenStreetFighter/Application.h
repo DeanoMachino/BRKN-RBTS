@@ -10,7 +10,7 @@
 #include "ApplicationDefines.h"
 #include <SFML\Window.hpp>
 #include <SFML\Graphics.hpp>
-
+#include "AnimatedSprite.hpp"
 #include "GameObj.h"
 
 class Application {
@@ -27,7 +27,8 @@ protected:
 private:
 	e_GameState currentState;
 	void Initialise();
-
+	sf::Clock frameClock;
+	sf::Time frameTime;
 	void ManageEvents(sf::RenderWindow* window);
 	void Process(sf::RenderWindow* window);
 	void Render(sf::RenderWindow* window);
