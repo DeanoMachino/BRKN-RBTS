@@ -20,7 +20,12 @@ public:
 	~GameObj();
 
 	sf::Texture texture_;
-
+	sf::Vector2f Position;
+	float Width;
+	float Height;
+	bool visible;
+	bool collide;
+	bool animated;
 	void SetTexture();
 
 
