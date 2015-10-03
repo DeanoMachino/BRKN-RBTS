@@ -4,6 +4,8 @@
 // ===============================
 // Application.h
 
+#include "InputHandler.h"
+
 #ifndef APPLICATION_H
 #define APPLICATION_H
 #include "ApplicationDefines.h"
@@ -23,6 +25,8 @@ private:
 	void GetInput();
 	void Process(e_GameState CurrentState);
 	void Render(e_GameState CurrentState);
+
+	InputHandler ih;
 
 };
 
