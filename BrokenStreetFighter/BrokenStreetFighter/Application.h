@@ -4,6 +4,8 @@
 // ===============================
 // Application.h
 
+#include "InputHandler.h"
+
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
@@ -22,6 +24,8 @@ private:
 	void GetInput();
 	void Process();
 	void Render();
+
+	InputHandler ih;
 
 };
 
