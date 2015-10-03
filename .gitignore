@@ -20,7 +20,6 @@
 *.lai
 *.la
 *.a
-*.lib
 
 # Executables
 *.exe
@@ -30,3 +29,9 @@
 # Random shite
 *.opensdf
 *.sdf
+*.log
+*.tlog
+*.suo
+*.idb
+*.pbd
+*.ilk
