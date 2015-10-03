@@ -59,6 +59,7 @@ public:
 	void MouseMoved(sf::Vector2f position);
 	void MouseInWindow(bool inWindow);
 
+	Key* getKey(e_InputType i, int k);
 	bool isKeyPressed(e_InputType i, int k);
 	bool isKeyDown(e_InputType i, int k);
 	bool isKeyReleased(e_InputType i, int k);

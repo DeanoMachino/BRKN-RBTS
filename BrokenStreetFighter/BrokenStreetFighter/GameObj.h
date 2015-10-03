@@ -48,6 +48,4 @@ protected:
 	Animation* currentAnimation;
 };
 
-
-
 #endif

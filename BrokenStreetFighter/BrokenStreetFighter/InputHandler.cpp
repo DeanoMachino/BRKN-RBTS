@@ -88,6 +88,18 @@ void InputHandler::MouseInWindow(bool inWindow) {
 	mouse.mouseInWindow = inWindow;
 }
 
+
+Key* InputHandler::getKey(e_InputType i, int k) {
+	switch(i) {
+		case e_KEYBOARD:
+			return &keyboard.key.at(k);
+			break;
+		case e_MOUSE:
+			return &mouse.button.at(k);
+			break;
+	}
+}
+
 bool InputHandler::isKeyPressed(e_InputType i, int k) {
 	switch(i) {
 		case e_KEYBOARD:

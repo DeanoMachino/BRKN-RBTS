@@ -20,14 +20,18 @@ struct ControlLayout {
 
 
 // DEFINES
-#define	PLAYER_COUNT	2
-#define CONTROL_LAYOUTS	1
-#define	CONTROL_DELAY	15
-#define GRAVITY			0
-#define FRICTION		1
-#define AIR_RESISTANCE	2
-#define MOVE_SPEED		0
-#define JUMP_SPEED		20
+#define	PLAYER_COUNT		2
+#define CONTROL_LAYOUTS		2
+#define	CONTROL_DELAY		15
+#define GRAVITY				1
+#define FRICTION			1
+#define AIR_RESISTANCE		2
+#define MOVE_SPEED			7.5
+#define JUMP_SPEED			20
+
+#define FLOOR_Y				600
+#define RESOLUTION_X		1024
+#define RESOLUTION_Y		768
 
 
 // ENUMS
