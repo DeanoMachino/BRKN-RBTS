@@ -15,7 +15,8 @@ public:
 	Player();
 	~Player();
 
-	bool Initialise(InputHandler* hInput);
+	bool Initialise(InputHandler* hInput, int i, sf::Vector2f p);
+	
 	void Update(InputHandler* hInput);
 	void ChangeControls(InputHandler* hInput);
 
@@ -23,6 +24,8 @@ protected:
 
 
 private:
+	void InitialiseControls(InputHandler* hInput, int i);
+
 	void HandleInput(InputHandler* hInput);
 	void RepositionPlayer();
 
@@ -30,7 +33,8 @@ private:
 	void Jump();
 	void Attack(e_AttackType at);
 
-	ControlLayout* controls[CONTROL_LAYOUTS];
+	//std::vector<ControlLayout
+	ControlLayout controls[CONTROL_LAYOUTS];
 	ControlLayout* currentControls;
 	int layout;
 

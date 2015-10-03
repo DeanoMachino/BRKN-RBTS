@@ -8,17 +8,16 @@
 
 Application::Application() {
 	Initialise();
-
 }
 
 Application::~Application() {
 }
 
 void Application::Run() {
-	sf::RenderWindow window(sf::VideoMode(1024, 768), "SFML works!");
+	sf::RenderWindow window(sf::VideoMode(RESOLUTION_X, RESOLUTION_Y), "Lol");
 	window.setFramerateLimit(60);
-	//player[0].SetTexture();
-	player[0].SetUpSprite();
+
+	
 	// Game loop
 	while(window.isOpen()) {
 		frameTime = frameClock.restart();
@@ -31,10 +30,19 @@ void Application::Run() {
 void Application::Initialise() {
 	currentState = e_START;
 	winState = e_ONGOING;
+
+	fullscreen = false;
+
+	Players[0].SetUpSprite();
+	Players[0].Initialise(&hInput, 0, sf::Vector2f(400, 500));
+	Players[1].SetUpSprite();
+	Players[1].Initialise(&hInput, 1, sf::Vector2f(800, 500));
 }
 
 void Application::ManageEvents(sf::RenderWindow* window) {
 	sf::Event event;
+
+	hInput.KeyResetChanged();
 	// Sifts through all events
 	while(window->pollEvent(event)) {
 		// Check event type
@@ -71,6 +79,19 @@ void Application::ManageEvents(sf::RenderWindow* window) {
 }
 
 void Application::Process(sf::RenderWindow* window) {
+	
+	// Switch between fullscreen and windowed mode
+	/*if(hInput.isKeyReleased(e_KEYBOARD, sf::Keyboard::F11)) {
+		switch(fullscreen) {
+			case false:
+				fullscreen = true;
+				window->create(sf::VideoMode(RESOLUTION_X, RESOLUTION_Y), "Lol", sf::Style::Fullscreen);
+				break;
+			case true:
+				fullscreen = false;
+				window->create(sf::VideoMode(RESOLUTION_X, RESOLUTION_Y), "lol");
+		}
+	}*/
 
 	switch(currentState) {
 		case e_START:
@@ -139,10 +160,13 @@ void Application::Render(sf::RenderWindow* window) {
 			// Render background
 			//shape.setFillColor(sf::Color::Blue);
 			// Render foreground
-			player[0].animatedSprite.update(frameTime);
+			Players[0].animatedSprite.update(frameTime);
 			//window->draw(shape);
-			window->draw(player[0].animatedSprite);
-			window->draw(player[0].player);
+			window->draw(Players[0].animatedSprite);
+			
+
+			Players[1].animatedSprite.update(frameTime);
+			window->draw(Players[1].animatedSprite);
 			
 			for(int i = 0; i < PLAYER_COUNT; ++i) {
 				// render player

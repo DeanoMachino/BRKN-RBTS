@@ -11,8 +11,6 @@
 #include <SFML\Window.hpp>
 #include <SFML\Graphics.hpp>
 #include "AnimatedSprite.hpp"
-#include "GameObj.h"
-
 #include "Player.h"
 
 class Application {
@@ -40,6 +38,8 @@ private:
 
 	e_GameState currentState;
 	e_WinState winState;
+
+	bool fullscreen;
 	
 	sf::Clock frameClock;
 	sf::Time frameTime;

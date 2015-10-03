@@ -7,8 +7,6 @@
 #include "GameObj.h"
 
 GameObj::GameObj(){
-	Position.x = (512);
-	Position.y = (384);
 	SetTexture();
 }
 
