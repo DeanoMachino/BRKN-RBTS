@@ -4,11 +4,13 @@
 // ===============================
 // Application.h
 
-#include "InputHandler.h"
-
 #ifndef APPLICATION_H
 #define APPLICATION_H
+
 #include "ApplicationDefines.h"
+#include <SFML\Window.hpp>
+#include <SFML\Graphics.hpp>
+
 class Application {
 public:
 	Application();
@@ -20,14 +22,16 @@ protected:
 
 
 private:
-	e_GameState CurrentState;
+	e_GameState currentState;
 	void Initialise();
-	void GetInput();
-	void Process(e_GameState CurrentState);
-	void Render(e_GameState CurrentState);
+	void ManageEvents(sf::RenderWindow* window);
+	void Process(sf::RenderWindow* window);
+	void Render(sf::RenderWindow* window);
 
-	InputHandler ih;
+	void DetectCollisions();
 
+	InputHandler hInput;
+	int player[2];				// CHANGE TO TYPE PLAYER CLASS
 };
 
 #endif
