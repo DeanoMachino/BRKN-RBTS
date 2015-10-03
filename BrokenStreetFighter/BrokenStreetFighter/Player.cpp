@@ -20,8 +20,16 @@ bool Player::Initialise(InputHandler* hInput) {
 }
 
 void Player::Update(InputHandler* hInput) {
-	HandleInput(hInput);
+	//HandleInput(hInput);
+	if (hInput->isKeyDown(e_KEYBOARD, sf::Keyboard::A)) {
+		Move(e_LEFT);
+		currentAnimation = &walkBackwardsAni;
+	}
+	else currentAnimation = &deathAni;
+	animatedSprite.play(*currentAnimation);
+
 	RepositionPlayer();
+
 }
 
 void Player::ChangeControls(InputHandler* hInput) {
@@ -29,7 +37,6 @@ void Player::ChangeControls(InputHandler* hInput) {
 	if(layout > (CONTROL_LAYOUTS - 1)) {
 		layout = 0;
 	}
-	
 	currentControls = controls[layout];
 }
 
@@ -89,6 +96,8 @@ void Player::RepositionPlayer() {
 	// POSITION Y
 	Position.y += velocity.y;
 	velocity.y += GRAVITY;
+
+	animatedSprite.setPosition(Position.x - 26, Position.y - 26);
 }
 
 void Player::Move(e_Direction d) {

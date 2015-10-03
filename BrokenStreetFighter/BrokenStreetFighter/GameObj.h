@@ -33,15 +33,19 @@ public:
 	void SetTexture();
 	void SetUpSprite();
 	void SetAnimations();
+	void SetupStaticSprite(sf::Vector2f Position);
 
 protected:
 	sf::Texture texture;
-	Animation walkFowardA;
-	Animation walkBackwardsA;
-	Animation IdleA;
+
+	Animation walkFowardAni;
+	Animation walkBackwardsAni;
+	Animation idleAni;
+	Animation hardPunchAni;
+	Animation lightPunchAni;
+	Animation deathAni;
 
 	Animation* currentAnimation;
-
 };
 
 

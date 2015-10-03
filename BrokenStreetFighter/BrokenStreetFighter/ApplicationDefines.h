@@ -23,10 +23,10 @@ struct ControlLayout {
 #define	PLAYER_COUNT	2
 #define CONTROL_LAYOUTS	1
 #define	CONTROL_DELAY	15
-#define GRAVITY			10
+#define GRAVITY			0
 #define FRICTION		1
 #define AIR_RESISTANCE	2
-#define MOVE_SPEED		10
+#define MOVE_SPEED		0
 #define JUMP_SPEED		20
 
 

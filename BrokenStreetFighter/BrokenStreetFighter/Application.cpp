@@ -17,8 +17,7 @@ Application::~Application() {
 void Application::Run() {
 	sf::RenderWindow window(sf::VideoMode(1024, 768), "SFML works!");
 	window.setFramerateLimit(60);
-	//player[0].SetTexture();
-	player[0].SetUpSprite();
+	Players[0].SetUpSprite();
 	// Game loop
 	while(window.isOpen()) {
 		frameTime = frameClock.restart();
@@ -139,10 +138,10 @@ void Application::Render(sf::RenderWindow* window) {
 			// Render background
 			//shape.setFillColor(sf::Color::Blue);
 			// Render foreground
-			player[0].animatedSprite.update(frameTime);
+			Players[0].animatedSprite.update(frameTime);
 			//window->draw(shape);
-			window->draw(player[0].animatedSprite);
-			window->draw(player[0].player);
+			window->draw(Players[0].animatedSprite);
+			window->draw(Players[0].player);
 			
 			for(int i = 0; i < PLAYER_COUNT; ++i) {
 				// render player
