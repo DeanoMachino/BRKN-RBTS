@@ -19,7 +19,6 @@ bool Player::Initialise(InputHandler* hInput, int i, sf::Vector2f p) {
 	inAir = false;
 	attacking = false;
 	layout = 0;
-
 	InitialiseControls(hInput, i);
 	return true;
 }
@@ -59,8 +58,12 @@ void Player::InitialiseControls(InputHandler* hInput, int i) {
 	}
 }
 
-void Player::Update(InputHandler* hInput) {
-	HandleInput(hInput);
+void Player::Update(InputHandler* hInput, int id) {
+	/*if (flipped = true){
+		PlayerTexFlipped();
+	}
+	else PlayerTex();*/
+	HandleInput(hInput,id);
 	RepositionPlayer();
 	animatedSprite.play(*currentAnimation);
 }
@@ -75,7 +78,7 @@ void Player::ChangeControls(InputHandler* hInput) {
 }
 
 
-void Player::HandleInput(InputHandler* hInput) {
+void Player::HandleInput(InputHandler* hInput, int id) {
 	if(hInput->isKeyPressed(e_KEYBOARD, sf::Keyboard::Return)) {
 		ChangeControls(hInput);
 	}
@@ -86,19 +89,31 @@ void Player::HandleInput(InputHandler* hInput) {
 	// MOVE LEFT
 	if(currentControls->Left->pressed) {
 		Move(e_LEFT);
+		//if (id == 0){
+	//		currentAnimation = &walkBackwardsAni;
+		//}
+		//if (id == 1){
+		//	currentAnimation = &walkFowardAni;
+
+		//}
 	}
 	// MOVE RIGHT
-	if(currentControls->Right->pressed) {
+	else if(currentControls->Right->pressed) {
 		Move(e_RIGHT);
+		currentAnimation = &walkFowardAni; 
 	}
 	// WEAK ATTACK
-	if(currentControls->Weak->pressed && currentControls->Weak->changed) {
+	else if(currentControls->Weak->pressed && currentControls->Weak->changed) {
 		Attack(e_WEAK);
+		currentAnimation = &lightPunchAni;
+
 	}
 	// HEAVY ATTACK
-	if(currentControls->Heavy->pressed && currentControls->Heavy->changed) {
+	else if(currentControls->Heavy->pressed && currentControls->Heavy->changed) {
 		Attack(e_HEAVY);
+		currentAnimation = &hardPunchAni;
 	}
+	else currentAnimation = &idleAni;
 }
 
 void Player::RepositionPlayer() {

@@ -33,8 +33,10 @@ void Application::Initialise() {
 	fullscreen = false;
 
 	Players[0].SetUpSprite();
+	Players[0].flipped = false;
 	Players[0].Initialise(&hInput, 0, sf::Vector2f(400, 500));
 	Players[1].SetUpSprite();
+	Players[1].flipped = true;
 	Players[1].Initialise(&hInput, 1, sf::Vector2f(800, 500));
 }
 
@@ -109,9 +111,9 @@ void Application::Process(sf::RenderWindow* window) {
 				currentState = e_END;
 			} else {
 
-
+				LocationComparison();
 				for(int i = 0; i < PLAYER_COUNT; ++i) {
-					Players[i].Update(&hInput);
+					Players[i].Update(&hInput,i);
 				}
 
 
@@ -186,4 +188,20 @@ void Application::Render(sf::RenderWindow* window) {
 	}
 
 	window->display();
+}
+
+
+void Application::LocationComparison(){
+	float x_a = Players[0].Position.x;
+	float x_b = Players[1].Position.x;
+
+	if (x_a > x_b && (Players[0].flipped == false && Players[1].flipped == true)){
+		Players[0].flipped = true;
+		Players[1].flipped = false;
+		//Players[1].NeedFliped=
+	}
+	else if (x_a < x_b && (Players[0].flipped == true && Players[1].flipped == false)){
+		Players[0].flipped = false;
+		Players[1].flipped = true;
+	}
 }

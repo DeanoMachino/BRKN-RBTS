@@ -29,14 +29,20 @@ public:
 	bool visible;
 	bool collide;
 	bool animated;
+	bool flipped;
 
 	void SetTexture();
+
+	void PlayerTexFlipped();
+	void PlayerTex();
 	void SetUpSprite();
-	void SetAnimations();
+	void SetAnimations(sf::Texture* texture);
 	void SetupStaticSprite(sf::Vector2f Position);
 
 protected:
-	sf::Texture texture;
+	sf::Texture playertexture;
+	sf::Texture playertextureFlipped;
+	sf::Texture CurrentPlayerTex;
 
 	Animation walkFowardAni;
 	Animation walkBackwardsAni;

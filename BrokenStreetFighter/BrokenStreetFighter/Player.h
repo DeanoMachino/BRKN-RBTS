@@ -14,10 +14,11 @@ class Player : public GameObj {
 public:
 	Player();
 	~Player();
-
+	
+	
 	bool Initialise(InputHandler* hInput, int i, sf::Vector2f p);
 	
-	void Update(InputHandler* hInput);
+	void Update(InputHandler* hInput,int id);
 	void ChangeControls(InputHandler* hInput);
 
 protected:
@@ -26,7 +27,7 @@ protected:
 private:
 	void InitialiseControls(InputHandler* hInput, int i);
 
-	void HandleInput(InputHandler* hInput);
+	void HandleInput(InputHandler* hInput, int id);
 	void RepositionPlayer();
 
 	void Move(e_Direction d);

@@ -29,7 +29,7 @@ private:
 	void ManageEvents(sf::RenderWindow* window);
 	void Process(sf::RenderWindow* window);
 	void Render(sf::RenderWindow* window);
-
+	void LocationComparison();
 	void DetectCollisions();
 
 	InputHandler hInput;
