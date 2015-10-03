@@ -18,16 +18,28 @@
     <Filter Include="Source Files\Game Objects">
       <UniqueIdentifier>{65a3e8fb-5114-4169-9e10-e287186c8553}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\System\Graphics">
+      <UniqueIdentifier>{0bb1050b-c0a1-455a-8441-f229abf94c55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="InputHandler.cpp">
       <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObj.cpp">
+      <Filter>Source Files\Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedSprite.cpp">
+      <Filter>Source Files\System\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Source Files\System\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +51,15 @@
     </ClInclude>
     <ClInclude Include="Application.h">
       <Filter>Source Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObj.h">
+      <Filter>Source Files\Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedSprite.hpp">
+      <Filter>Source Files\System\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.hpp">
+      <Filter>Source Files\System\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

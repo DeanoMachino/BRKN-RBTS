@@ -11,10 +11,13 @@
 #include <SFML\Window.hpp>
 #include <SFML\Graphics.hpp>
 
+#include "GameObj.h"
+
 class Application {
 public:
 	Application();
 	~Application();
+
 
 	void Run();
 
@@ -24,6 +27,7 @@ protected:
 private:
 	e_GameState currentState;
 	void Initialise();
+
 	void ManageEvents(sf::RenderWindow* window);
 	void Process(sf::RenderWindow* window);
 	void Render(sf::RenderWindow* window);
@@ -31,7 +35,7 @@ private:
 	void DetectCollisions();
 
 	InputHandler hInput;
-	int player[2];				// CHANGE TO TYPE PLAYER CLASS
+	GameObj player[2];				// CHANGE TO TYPE PLAYER CLASS
 };
 
 #endif
