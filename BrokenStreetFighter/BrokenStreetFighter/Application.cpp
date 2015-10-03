@@ -14,37 +14,31 @@ Application::~Application() {
 }
 
 void Application::Run() {
-	sf::RenderWindow window(sf::VideoMode(1024, 768), "Broken Street Fighter");
+	Initialise();
+
+	// placeholder
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);
 
+	// Game loop
 	while(window.isOpen()) {
-		sf::Event event;
-		while(window.pollEvent(event)) {
-			if(event.type == sf::Event::Closed)
-				window.close();
-		}
-
-		switch (CurrentState){
-			case e_INITIALISE:
-				Initialise();
-				break;
-
+		switch(currentState) {
 			case e_START:
-				Process(CurrentState);
-				Render(CurrentState);
+				Process(currentState);
+				Render(currentState);
 				break;
 
 			case e_INGAME:
-				GetInput();
-				Process(CurrentState);
-				Render(CurrentState);
+				ManageEvents();
+				Process(currentState);
+				Render(currentState);
 				break;
 
 			case e_END:
-				GetInput();
-				Process(CurrentState);
-				Render(CurrentState);
+				ManageEvents();
+				Process(currentState);
+				Render(currentState);
+				break;
 		}
 
 		window.clear();
@@ -54,17 +48,50 @@ void Application::Run() {
 }
 
 void Application::Initialise() {
+	settings.antialiasingLevel = 8;
+	window.create(sf::VideoMode(1024, 768), "BrokenStreetFighter");
 
+	currentState = e_START;
 }
 
-void Application::GetInput() {
-
+void Application::ManageEvents() {
+	sf::Event event;
+	while(window.pollEvent(event)) {
+		switch(event.type) {
+			case sf::Event::Closed:
+				window.close();
+				break;
+			case sf::Event::KeyPressed:
+				hInput.KeyPressed(e_KEYBOARD, event.key.code);
+				break;
+			case sf::Event::KeyReleased:
+				hInput.KeyReleased(e_KEYBOARD, event.key.code);
+				break;
+			case sf::Event::MouseButtonPressed:
+				hInput.KeyPressed(e_MOUSE, event.mouseButton.button);
+				break;
+			case sf::Event::MouseButtonReleased:
+				hInput.KeyReleased(e_MOUSE, event.mouseButton.button);
+				break;
+			case sf::Event::MouseMoved:
+				hInput.MouseMoved(sf::Vector2f(event.mouseMove.x, event.mouseMove.y));
+				break;
+			case sf::Event::MouseWheelMoved:
+				hInput.MouseWheelMoved(event.mouseWheel.delta);
+				break;
+			case sf::Event::MouseEntered:
+				hInput.MouseInWindow(true);
+				break;
+			case sf::Event::MouseLeft:
+				hInput.MouseInWindow(false);
+				break;
+		}
+	}
 }
 
-void Application::Process(e_GameState CurrentState) {
-
+void Application::Process(e_GameState currentState) {
 }
 
-void Application::Render(e_GameState CurrentState) {
+void Application::Render(e_GameState currentState) {
 
 }

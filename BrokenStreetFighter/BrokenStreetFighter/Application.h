@@ -4,11 +4,11 @@
 // ===============================
 // Application.h
 
-#include "InputHandler.h"
-
 #ifndef APPLICATION_H
 #define APPLICATION_H
+
 #include "ApplicationDefines.h"
+
 class Application {
 public:
 	Application();
@@ -20,13 +20,16 @@ protected:
 
 
 private:
-	e_GameState CurrentState;
+	e_GameState currentState;
 	void Initialise();
-	void GetInput();
-	void Process(e_GameState CurrentState);
-	void Render(e_GameState CurrentState);
+	void ManageEvents();
+	void Process(e_GameState currentState);
+	void Render(e_GameState currentState);
 
-	InputHandler ih;
+	sf::ContextSettings settings;
+	sf::RenderWindow window;
+
+	InputHandler hInput;
 
 };
 
