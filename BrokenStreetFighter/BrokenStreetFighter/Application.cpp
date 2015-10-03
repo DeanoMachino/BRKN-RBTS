@@ -30,7 +30,7 @@ void Application::Run() {
 
 void Application::Initialise() {
 	currentState = e_START;
-
+	winState = e_ONGOING;
 }
 
 void Application::ManageEvents(sf::RenderWindow* window) {
@@ -85,27 +85,25 @@ void Application::Process(sf::RenderWindow* window) {
 			break;
 		case e_INGAME:
 			// Check win state
-			// if still in play, continue
-			// else change state
+			if(winState != e_ONGOING) {
+				currentState = e_END;
+			} else {
 
 
-			for(int i = 0; i < PLAYER_COUNT; ++i) {
-				// PLAYER CONTROLS HERE
-				// Pass input handler into method within Player
-				// 
+				for(int i = 0; i < PLAYER_COUNT; ++i) {
+					Players[i].Update(&hInput);
+				}
+
+
+				// Collision detection here
+				// AABB
+
+
+				// if timer == 0
+				// change control schemes (method within player class)
+
+				break;
 			}
-
-
-			// Collision detection here
-			// AABB
-
-			
-			// if timer == 0
-			// change control schemes (method within player class)
-			
-			
-
-			break;
 		case e_END:
 			// ESCAPE - Close game
 			if(hInput.isKeyPressed(e_KEYBOARD, sf::Keyboard::Escape)) {
@@ -145,13 +143,18 @@ void Application::Render(sf::RenderWindow* window) {
 			//window->draw(shape);
 			window->draw(player[0].animatedSprite);
 			window->draw(player[0].player);
+			
+			for(int i = 0; i < PLAYER_COUNT; ++i) {
+				// render player
+			}
+			
 			// Render UI
 
 			break;
 		case e_END:
 			// Render background
 			
-
+			
 			// Render foreground
 			window->draw(shape);
 

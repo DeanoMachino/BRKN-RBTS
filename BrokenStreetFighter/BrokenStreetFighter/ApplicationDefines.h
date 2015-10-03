@@ -10,20 +10,24 @@
 #include "InputHandler.h"
 
 // INCLUDES
-struct ControlLayout
-{
+struct ControlLayout {
 	Key* Up;
 	Key* Left;
 	Key* Right;
-	Key* Punch;
-	Key* Block;
+	Key* Weak;
+	Key* Heavy;
 };
 
 
 // DEFINES
 #define	PLAYER_COUNT	2
+#define CONTROL_LAYOUTS	1
 #define	CONTROL_DELAY	15
-
+#define GRAVITY			10
+#define FRICTION		1
+#define AIR_RESISTANCE	2
+#define MOVE_SPEED		10
+#define JUMP_SPEED		20
 
 
 // ENUMS
@@ -31,6 +35,17 @@ enum e_GameState {
 	e_START = 0, e_INGAME, e_END
 };
 
+enum e_Direction {
+	e_LEFT = 0, e_RIGHT
+};
+
+enum e_WinState {
+	e_PLAYER_1_WIN = 0, e_PLAYER_2_WIN, e_ONGOING
+};
+
+enum e_AttackType {
+	e_WEAK = 0, e_HEAVY
+};
 
 // ETCS
 

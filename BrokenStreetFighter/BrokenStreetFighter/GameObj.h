@@ -1,9 +1,8 @@
-#pragma once
 // BrokenStreetFighter
 // ADGS Game Jam - October 2015
 // Dean, Matt & Sidney
 // ==========================
-//GameObj.h
+// GameObj.h
 
 #ifndef GAMEOBJ_H
 #define GAMEOBJ_H
