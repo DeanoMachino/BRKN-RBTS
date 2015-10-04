@@ -49,6 +49,7 @@ private:
 	bool gameStarted;
 
 	sf::Clock ControlChangeTimer;
+	sf::Clock DeathTimer;
 
 	sf::Clock frameClock;
 	sf::Time frameTime;

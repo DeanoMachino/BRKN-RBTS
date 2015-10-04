@@ -276,3 +276,11 @@ void Player::Attack(e_AttackType at) {
 		}
 	}
 }
+
+
+void Player::DEAD(){
+	animatedSprite.setLooped(false);
+	currentAnimation = &deathAni;
+	animatedSprite.play(*currentAnimation);
+
+}

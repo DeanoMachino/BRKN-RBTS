@@ -32,7 +32,7 @@ public:
 	sf::Clock AttackTimer;
 	bool isAttacking;
 	bool dead;
-
+	void DEAD();
 protected:
 
 

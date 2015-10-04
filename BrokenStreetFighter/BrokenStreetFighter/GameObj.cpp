@@ -26,6 +26,12 @@ void GameObj::SetTexture(){
 	if (!backgroundtexture.loadFromFile("bin/AGDSbackground.png")){
 		std::cout << "Failed to Load Player Spritesheet" << std::endl;
 	}
+	if (!player1_healthbarBTex.loadFromFile("bin/AGDSjam_player1bar.png")){
+		std::cout << "Failed to Load Player Spritesheet" << std::endl;
+	}
+	if (!player2_healthbarBTex.loadFromFile("bin/AGDSjam_player2bar.png")){
+		std::cout << "Failed to Load Player Spritesheet" << std::endl;
+	}
 	currentAnimation = &idleAni;
 	SetAnimations(&playertexture);
 }
@@ -123,5 +129,13 @@ void GameObj::SetAnimations(sf::Texture* texture){
 void GameObj::SetupStaticSprite(sf::Vector2f Position){
 	background.setTexture(backgroundtexture);
 	background.scale(9.5, 8.6);
+
+	player1_healthbarB.setTexture(player1_healthbarBTex);
+	player1_healthbarB.scale(9.5, 8.6);
+
+	player2_healthbarB.setTexture(player2_healthbarBTex);
+	player2_healthbarB.setPosition(932,0);
+	player2_healthbarB.scale(9.5, 8.6);
+	
 
 }

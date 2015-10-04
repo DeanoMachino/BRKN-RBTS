@@ -157,7 +157,17 @@ void Application::Process(sf::RenderWindow* window) {
 		case e_INGAME:
 			// Check win state
 			if(winState != e_ONGOING) {
-				currentState = e_END;
+				if (Players[0].dead){
+					Players[0].DEAD();
+					Players[1].animatedSprite.stop();
+				}
+				else if (Players[1].dead) {
+					Players[1].DEAD();
+				}
+				if (DeathTimer.getElapsedTime() >= sf::seconds(3)){
+					currentState = e_END;
+				}
+				
 			} else {
 				if(gameStarted == false) {		// If game not started yet
 					if(StartTimer.getElapsedTime() >= sf::seconds(START_COUNTDOWN)) {		// If countdown has finished
@@ -187,11 +197,11 @@ void Application::Process(sf::RenderWindow* window) {
 
 					// Check win condition
 					if(Players[0].dead) {
-						currentState = e_END;
 						winState = e_PLAYER_1_WIN;
+						DeathTimer.restart();
 					} else if(Players[1].dead) {
-						currentState = e_END;
 						winState = e_PLAYER_0_WIN;
+						DeathTimer.restart();
 					}
 					break;
 				}
@@ -227,6 +237,9 @@ void Application::Render(sf::RenderWindow* window) {
 		case e_INGAME:
 			// Render background
 			window->draw(Background.background);
+			window->draw(Background.player1_healthbarB);
+			window->draw(Background.player2_healthbarB);
+
 			// Render foreground
 			for(int i = 0; i < PLAYER_COUNT; ++i) {
 				Players[i].animatedSprite.update(frameTime);
