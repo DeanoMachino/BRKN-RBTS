@@ -14,16 +14,25 @@ Player::~Player() {
 
 bool Player::Initialise(InputHandler* hInput, int i, sf::Vector2f p) {
 	Position = p;
-	Width = 52;
-	Height = 52;
+	Width = 52*4;
+	Height = 52*4;
+	velocity = sf::Vector2f(0.0f, 0.0f);
+
+	health = 100;
+	dead = false;
 	inAir = false;
-	attacking = false;
 	isPunchingW = false;
 	isPunchingH = false;
-	TimerStart = false;
+	
+	isAttacking = false;
+	attackType = e_NO_ATTACK;
+	AttackTimer.restart();
+	knockback = false;
+
 	layout = 0;
 	time = 0;
 	InitialiseControls(hInput, i);
+	Update(hInput);
 	return true;
 }
 
@@ -62,8 +71,7 @@ void Player::InitialiseControls(InputHandler* hInput, int i) {
 	}
 }
 
-void Player::Update(InputHandler* hInput, int id) {
-	
+void Player::Update(InputHandler* hInput) {
 	if (animatedSprite.m_currentFrame >= 5 && isPunchingH == true){
 		isPunchingH = false;
 	}
@@ -77,7 +85,16 @@ void Player::Update(InputHandler* hInput, int id) {
 	else if (flipped == false && needFlipped == true){
 		PlayerTex();
 	}
-	HandleInput(hInput,id);
+	//if(attackDelay > 0) {
+	//	--attackDelay;
+	//} else if(attackDelay == 0 && attacking != e_NO_ATTACK) {
+	//	attacking = e_NO_ATTACK;
+	//}
+	if(AttackTimer.getElapsedTime() >= sf::seconds(ATTACK_DELAY)) {
+		attackType = e_NO_ATTACK;
+	}
+
+	HandleInput(hInput);
 	RepositionPlayer();
 	animatedSprite.play(*currentAnimation);
 }
@@ -91,48 +108,74 @@ void Player::ChangeControls(InputHandler* hInput) {
 	currentControls = &controls[layout];
 }
 
+void Player::Knockback(e_Direction d, e_AttackType at) {
+	sf::Vector2f strength;
+	if(at == e_WEAK) {
+		strength = sf::Vector2f(KNOCKBACK_WEAK_X, KNOCKBACK_WEAK_Y);
+	} else {
+		strength = sf::Vector2f(KNOCKBACK_HEAVY_X, KNOCKBACK_HEAVY_Y);
+	}
 
-void Player::HandleInput(InputHandler* hInput, int id) {
+	if(d == e_LEFT) {
+		strength.x = -strength.x;
+	}
+
+	velocity = strength;
+	knockback = true;
+}
+
+void Player::DepleteHealth(e_AttackType at) {
+	switch(at) {
+		case e_WEAK:
+			health -= 5;
+			break;
+		case e_HEAVY:
+			health -= 10;
+			break;
+	}
+	if(health <= 0) {
+		dead = true;
+	}
+}
+
+
+void Player::HandleInput(InputHandler* hInput) {
 	if(hInput->isKeyPressed(e_KEYBOARD, sf::Keyboard::Return)) {
 		ChangeControls(hInput);
 	}
-	// JUMP
-	if(currentControls->Up->pressed && currentControls->Up->changed) {
-		Jump();
-	}
-	// MOVE LEFT
-	if(currentControls->Left->pressed) {
-		Move(e_LEFT);
-		if (flipped == true && (isPunchingW == false || isPunchingH == false)){
-			currentAnimation = &walkFowardAni;
+	if(!knockback) {
+		// JUMP
+		if(currentControls->Up->pressed && currentControls->Up->changed) {
+			Jump();
 		}
-		else currentAnimation = &walkBackwardsAni;
-
-	}
-	// MOVE RIGHT
-	else if(currentControls->Right->pressed) {
-		Move(e_RIGHT);
-		if (flipped == true && (isPunchingW == false || isPunchingH == false)){
-			currentAnimation = &walkBackwardsAni;
-		}
-		else currentAnimation = &walkFowardAni;
-	}
-	// WEAK ATTACK
-	else if(currentControls->Weak->pressed && currentControls->Weak->changed) {
-		Attack(e_WEAK);
-		currentAnimation = &lightPunchAni;
-		isPunchingW = true;
-		TimerStart = true;
-	}
-	// HEAVY ATTACK
-	else if(currentControls->Heavy->pressed && currentControls->Heavy->changed) {
-		Attack(e_HEAVY);
-		currentAnimation = &hardPunchAni;
-		isPunchingH = true;
-		TimerStart = true;
-	}
-	else {
-		if (isPunchingW == false && isPunchingH == false){
+		// MOVE LEFT
+		if(currentControls->Left->pressed) {
+			Move(e_LEFT);
+			if (flipped == true && (isPunchingW == false || isPunchingH == false)){
+				currentAnimation = &walkFowardAni;
+			}
+			else currentAnimation = &walkBackwardsAni;
+		}else
+		// MOVE RIGHT
+		if(currentControls->Right->pressed) {
+			Move(e_RIGHT);
+			if (flipped == true && (isPunchingW == false || isPunchingH == false)){
+				currentAnimation = &walkBackwardsAni;
+			}
+			else currentAnimation = &walkFowardAni;
+		}else
+		// WEAK ATTACK
+		if(currentControls->Weak->pressed && currentControls->Weak->changed) {
+			Attack(e_WEAK);
+			currentAnimation = &lightPunchAni;
+			isPunchingW = true;
+		}else
+		// HEAVY ATTACK
+		if(currentControls->Heavy->pressed && currentControls->Heavy->changed) {
+			Attack(e_HEAVY);
+			currentAnimation = &hardPunchAni;
+			isPunchingH = true;
+		}else if (isPunchingW == false && isPunchingH == false){
 			currentAnimation = &idleAni;
 		}
 	}
@@ -167,6 +210,14 @@ void Player::RepositionPlayer() {
 		}
 	}
 
+	if(Position.x - (Width / 2) < STAGE_MIN) {
+		Position.x = STAGE_MIN + (Width / 2);
+		velocity.x = 0;
+	}if(Position.x + (Width / 2) > STAGE_MAX) {
+		Position.x = STAGE_MAX - (Width / 2);
+		velocity.x = 0;
+	}
+
 	// POSITION Y
 	Position.y += velocity.y;
 	velocity.y += GRAVITY;
@@ -174,10 +225,22 @@ void Player::RepositionPlayer() {
 	if(Position.y >= FLOOR_Y) {
 		Position.y = FLOOR_Y;
 		inAir = false;
+		knockback = false;
+	} else {
+		inAir = true;
 	}
 
 	// Set sprite position
-	animatedSprite.setPosition(Position.x - (Width / 2), Position.y);
+	UpdateAABB();
+	animatedSprite.setPosition(boundingBox.min.x, boundingBox.min.y);
+}
+
+void Player::UpdateAABB() {
+	boundingBox.max.x = Position.x + (Width / 2);
+	boundingBox.max.y = Position.y;
+	
+	boundingBox.min.x = Position.x - (Width / 2);
+	boundingBox.min.y = Position.y - Height;
 }
 
 void Player::Move(e_Direction d) {
@@ -201,12 +264,15 @@ void Player::Jump() {
 
 void Player::Attack(e_AttackType at) {
 	// Attack
-	if(!attacking) {
+	if(AttackTimer.getElapsedTime() >= sf::seconds(ATTACK_DELAY) && !isAttacking) {
+		isAttacking = true;
+		AttackTimer.restart();
 		if(at == e_WEAK) {
+			attackType = e_WEAK;
 			// weak attack stuff
 		} else {
+			attackType = e_HEAVY;
 			// heavy attack stuff
 		}
-		attacking = true;
 	}
 }

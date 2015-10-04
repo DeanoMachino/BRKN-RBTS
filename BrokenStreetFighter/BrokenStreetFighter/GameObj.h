@@ -53,6 +53,7 @@ protected:
 	Animation deathAni;
 
 	Animation* currentAnimation;
+	bool scaleSet;
 };
 
 #endif
