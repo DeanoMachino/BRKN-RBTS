@@ -39,11 +39,15 @@ public:
 	void SetUpSprite();
 	void SetAnimations(sf::Texture* texture);
 	void SetupStaticSprite(sf::Vector2f Position);
+	sf::Sprite background;
 
 protected:
 	sf::Texture playertexture;
 	sf::Texture playertextureFlipped;
 	sf::Texture CurrentPlayerTex;
+	sf::Texture backgroundtexture;
+
+	
 
 	Animation walkFowardAni;
 	Animation walkBackwardsAni;
@@ -51,6 +55,7 @@ protected:
 	Animation hardPunchAni;
 	Animation lightPunchAni;
 	Animation deathAni;
+	
 
 	Animation* currentAnimation;
 	bool scaleSet;

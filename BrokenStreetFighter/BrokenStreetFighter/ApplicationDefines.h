@@ -45,7 +45,7 @@ struct AABB {
 #define RESOLUTION_Y				768
 #define STAGE_MIN					10
 #define STAGE_MAX					RESOLUTION_X - 10
-#define FLOOR_Y						RESOLUTION_Y - 100
+#define FLOOR_Y						RESOLUTION_Y - 50
 
 #define START_COUNTDOWN				3
 #define	CONTROL_CHANGE_DELAY		10

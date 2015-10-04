@@ -14,8 +14,8 @@ Player::~Player() {
 
 bool Player::Initialise(InputHandler* hInput, int i, sf::Vector2f p) {
 	Position = p;
-	Width = 52*4;
-	Height = 52*4;
+	Width = 52*5;
+	Height = 52*5;
 	velocity = sf::Vector2f(0.0f, 0.0f);
 
 	health = 100;

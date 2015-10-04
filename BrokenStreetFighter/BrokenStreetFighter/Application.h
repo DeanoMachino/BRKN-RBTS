@@ -37,7 +37,7 @@ private:
 	void SetText(sf::Text* text, sf::Font font, const sf::String string, sf::Color color, sf::Vector2f position, float charSize);
 
 	InputHandler hInput;
-
+	GameObj Background;
 	Player Players[PLAYER_COUNT];
 
 	e_GameState currentState;

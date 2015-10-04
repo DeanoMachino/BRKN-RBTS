@@ -23,6 +23,9 @@ void GameObj::SetTexture(){
 	if (!playertextureFlipped.loadFromFile("bin/AGDSjam_spritesheet_Flipped.png")){
 		std::cout << "Failed to Load Player Spritesheet" << std::endl;
 	}
+	if (!backgroundtexture.loadFromFile("bin/AGDSbackground.png")){
+		std::cout << "Failed to Load Player Spritesheet" << std::endl;
+	}
 	currentAnimation = &idleAni;
 	SetAnimations(&playertexture);
 }
@@ -41,7 +44,8 @@ void GameObj::SetUpSprite(){
 	//AnimatedSprite animatedSprite();
 	animatedSprite.setFrameTime(sf::seconds(0.1));
 	if(!scaleSet) {
-		animatedSprite.scale(4, 4);
+		animatedSprite.scale(6, 6);
+		
 		scaleSet = true;
 	}
 	animatedSprite.pause();
@@ -117,7 +121,7 @@ void GameObj::SetAnimations(sf::Texture* texture){
 }
 
 void GameObj::SetupStaticSprite(sf::Vector2f Position){
-
-
+	background.setTexture(backgroundtexture);
+	background.scale(9.5, 8.6);
 
 }

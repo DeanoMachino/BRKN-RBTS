@@ -32,7 +32,7 @@ void Application::Initialise() {
 	currentState = e_START;
 	winState = e_ONGOING;
 	gameStarted = false;
-
+	Background.SetupStaticSprite(sf::Vector2f(10,10));
 	Players[0].SetUpSprite();
 	Players[0].flipped = false;
 	Players[0].Initialise(&hInput, 0, sf::Vector2f(PLAYER_1_START, FLOOR_Y));
@@ -226,7 +226,7 @@ void Application::Render(sf::RenderWindow* window) {
 			break;
 		case e_INGAME:
 			// Render background
-
+			window->draw(Background.background);
 			// Render foreground
 			for(int i = 0; i < PLAYER_COUNT; ++i) {
 				Players[i].animatedSprite.update(frameTime);
