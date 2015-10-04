@@ -61,6 +61,8 @@ private:
 	sf::Text TimerText;
 	sf::Text Player1Text;
 	sf::Text Player2Text;
+
+	sf::Text WinnerText;
 };
 
 #endif

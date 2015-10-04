@@ -83,6 +83,13 @@ void Application::InitialiseText() {
 	Player2Text.setCharacterSize(25);
 	Player2Text.setString("Player 2");
 	Player2Text.setPosition((RESOLUTION_X - (Player2Text.getGlobalBounds().width)), 0);
+
+	// END SCREEN
+	WinnerText.setFont(MainFont);
+	WinnerText.setColor(sf::Color::White);
+	WinnerText.setCharacterSize(100);
+	WinnerText.setString("A winner is you!");
+	WinnerText.setPosition((RESOLUTION_X / 2) - (WinnerText.getGlobalBounds().width / 2), RESOLUTION_Y / 2);
 }
 
 void Application::SetText(sf::Text* text, sf::Font font, const sf::String string, sf::Color color, sf::Vector2f position, float charSize) {
@@ -209,8 +216,7 @@ void Application::Render(sf::RenderWindow* window) {
 
 
 			// Render foreground
-			shape.setFillColor(sf::Color::Green);
-			//window->draw(shape);
+
 		
 			// Render UI
 			window->draw(GameLogo);
@@ -219,15 +225,9 @@ void Application::Render(sf::RenderWindow* window) {
 			break;
 		case e_INGAME:
 			// Render background
-			//shape.setFillColor(sf::Color::Blue);
-			// Render foreground
-			//Players[0].animatedSprite.update(frameTime);
-			//window->draw(shape);
-			//window->draw(Players[0].animatedSprite);		
 
-			//Players[1].animatedSprite.update(frameTime);
-			//window->draw(Players[1].animatedSprite);
-			
+
+			// Render foreground
 			for(int i = 0; i < PLAYER_COUNT; ++i) {
 				Players[i].animatedSprite.update(frameTime);
 				window->draw(Players[i].animatedSprite);
@@ -253,10 +253,9 @@ void Application::Render(sf::RenderWindow* window) {
 			
 			
 			// Render foreground
-			window->draw(shape);
 
 			// Render UI
-
+			window->draw(WinnerText);
 			break;
 	}
 
