@@ -15,7 +15,7 @@ Application::~Application() {
 }
 
 void Application::Run() {
-	sf::RenderWindow window(sf::VideoMode(RESOLUTION_X, RESOLUTION_Y), "PLACEHOLDER", sf::Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode(RESOLUTION_X, RESOLUTION_Y), "Lol", sf::Style::Fullscreen);
 	//sf::RenderWindow window(sf::VideoMode(RESOLUTION_X, RESOLUTION_Y), "PLACEHOLDER");
 	window.setFramerateLimit(60);
 
@@ -33,6 +33,7 @@ void Application::Initialise() {
 	winState = e_ONGOING;
 	gameStarted = false;
 	Background.SetupStaticSprite(sf::Vector2f(10,10));
+	Background.background.setPosition(-20, 0);
 	Players[0].SetUpSprite();
 	Players[0].flipped = false;
 	Players[0].Initialise(&hInput, 0, sf::Vector2f(PLAYER_1_START, FLOOR_Y));
@@ -46,14 +47,19 @@ void Application::InitialiseText() {
 	if(!MainFont.loadFromFile("bin/Fonts/joystix_monospace.ttf")) {
 		// FREAK OUT
 	}
-	//SetText(&GameLogo, MainFont, "Malfunction", sf::Color::White, sf::Vector2f(0,0), 75);
 
 	// START SCREEN
 	GameLogo.setFont(MainFont);
 	GameLogo.setColor(sf::Color::White);
 	GameLogo.setCharacterSize(75);
-	GameLogo.setString("PLACEHOLDER");
+	GameLogo.setString("BRKN RBTS");
 	GameLogo.setPosition((RESOLUTION_X / 2) - (GameLogo.getGlobalBounds().width / 2), RESOLUTION_Y / 4);
+
+	TeamText.setFont(MainFont);
+	TeamText.setColor(sf::Color::White);
+	TeamText.setCharacterSize(50);
+	TeamText.setString("Team Placeholder");
+	TeamText.setPosition((RESOLUTION_X / 2) - (TeamText.getGlobalBounds().width / 2), RESOLUTION_Y * 0.6);
 
 	StartScreenInfo1.setFont(MainFont);
 	StartScreenInfo1.setColor(sf::Color::White);
@@ -63,28 +69,45 @@ void Application::InitialiseText() {
 
 	// IN GAME
 	CountdownText.setFont(MainFont);
-	CountdownText.setColor(sf::Color::White);
+	CountdownText.setColor(sf::Color::Black);
 	CountdownText.setCharacterSize(100);
 	CountdownText.setString("3");
-	CountdownText.setPosition((RESOLUTION_X / 2) - (CountdownText.getGlobalBounds().width / 2), RESOLUTION_Y / 2);
+	CountdownText.setStyle(sf::Text::Bold);
 
 	TimerText.setFont(MainFont);
-	TimerText.setColor(sf::Color::White);
+	TimerText.setColor(sf::Color::Black);
 	TimerText.setCharacterSize(40);
 	TimerText.setString("00");
 	TimerText.setPosition((RESOLUTION_X / 2) - (TimerText.getGlobalBounds().width / 2), 0);
+	TimerText.setStyle(sf::Text::Bold);
 
 	Player1Text.setFont(MainFont);
-	Player1Text.setColor(sf::Color::White);
+	Player1Text.setColor(sf::Color::Black);
 	Player1Text.setCharacterSize(25);
 	Player1Text.setString("Player 1");
 	Player1Text.setPosition(10, 0);
+	Player1Text.setStyle(sf::Text::Bold);
 
 	Player2Text.setFont(MainFont);
-	Player2Text.setColor(sf::Color::White);
-	Player2Text.setCharacterSize(25);
-	Player2Text.setString("Player 2");
+	Player2Text.setColor(sf::Color::Black);
+	Player2Text.setCharacterSize(40);
+	Player2Text.setString("100");
 	Player2Text.setPosition((RESOLUTION_X - (Player2Text.getGlobalBounds().width)), 0);
+	Player2Text.setStyle(sf::Text::Bold);
+
+	Player1Health.setFont(MainFont);
+	Player1Health.setColor(sf::Color::White);
+	Player1Health.setCharacterSize(40);
+	Player1Health.setString("100");
+	Player1Health.setPosition(50, 50);
+	Player1Health.setStyle(sf::Text::Bold);
+
+	Player2Health.setFont(MainFont);
+	Player2Health.setColor(sf::Color::White);
+	Player2Health.setCharacterSize(40);
+	Player2Health.setString("100");
+	Player2Health.setPosition((RESOLUTION_X - (Player2Health.getGlobalBounds().width)) - 50, 50);
+	Player2Health.setStyle(sf::Text::Bold);
 
 	// END SCREEN
 	WinnerText.setFont(MainFont);
@@ -231,6 +254,7 @@ void Application::Render(sf::RenderWindow* window) {
 		
 			// Render UI
 			window->draw(GameLogo);
+			window->draw(TeamText);
 			window->draw(StartScreenInfo1);
 
 			break;
@@ -250,15 +274,22 @@ void Application::Render(sf::RenderWindow* window) {
 			if(!gameStarted) {
 				int count = 4 - StartTimer.getElapsedTime().asSeconds();
 				CountdownText.setString(std::to_string(count));
-				CountdownText.setPosition((RESOLUTION_X / 2) - (CountdownText.getGlobalBounds().width / 2), RESOLUTION_Y * 0.35);
+				CountdownText.setPosition((RESOLUTION_X / 2) - (CountdownText.getGlobalBounds().width / 2), RESOLUTION_Y * 0.7);
 				if(count != 0) {
 					window->draw(CountdownText);
 				}
 			}
 
-			window->draw(TimerText);
-			window->draw(Player1Text);
-			window->draw(Player2Text);
+			Player1Health.setString(std::to_string(Players[0].health));
+			Player1Health.setPosition(50, 25);
+			Player2Health.setString(std::to_string(Players[1].health));
+			Player2Health.setPosition((RESOLUTION_X - (Player2Health.getGlobalBounds().width)) - 50, 25);
+
+			window->draw(Player1Health);
+			window->draw(Player2Health);
+			//window->draw(TimerText);
+			//window->draw(Player1Text);
+			//window->draw(Player2Text);
 
 			break;
 		case e_END:
@@ -294,7 +325,7 @@ void Application::LocationComparison(){
 
 void Application::DetectCollisions() {
 	if(GetCollision(Players[0], Players[1])) {		// If collision
-		if(Players[0].isAttacking && Players[0].attackType != e_NO_ATTACK) {
+		if(Players[0].isAttacking && Players[0].attackType != e_NO_ATTACK && (Players[0].AttackTimer.getElapsedTime() >= sf::seconds(0.35) && Players[0].AttackTimer.getElapsedTime() <= sf::seconds(0.4))) {
 			// Damage enemy player
 			Players[1].DepleteHealth(Players[0].attackType);
 			// Knock player back
@@ -305,7 +336,7 @@ void Application::DetectCollisions() {
 			}
 			Players[0].isAttacking = false;
 		}
-		if(Players[1].isAttacking && Players[1].attackType != e_NO_ATTACK) {
+		if(Players[1].isAttacking && Players[1].attackType != e_NO_ATTACK && Players[1].AttackTimer.getElapsedTime() >= sf::seconds(0.35)) {
 			// Damage enemy player
 			Players[0].DepleteHealth(Players[1].attackType);
 			// Knock player back

@@ -33,6 +33,8 @@ public:
 	bool isAttacking;
 	bool dead;
 	void DEAD();
+	int health;
+
 protected:
 
 
@@ -56,7 +58,6 @@ private:
 
 	bool inAir;
 	bool knockback;
-	int health;
 };
 
 #endif
