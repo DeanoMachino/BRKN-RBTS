@@ -42,14 +42,14 @@ void Player::InitialiseControls(InputHandler* hInput, int i) {
 			controls[0].Left = hInput->getKey(e_KEYBOARD, sf::Keyboard::A);
 			controls[0].Right = hInput->getKey(e_KEYBOARD, sf::Keyboard::D);
 			controls[0].Up = hInput->getKey(e_KEYBOARD, sf::Keyboard::W);
-			controls[0].Weak = hInput->getKey(e_KEYBOARD, sf::Keyboard::E);
-			controls[0].Heavy = hInput->getKey(e_KEYBOARD, sf::Keyboard::Q);
+			controls[0].Weak = hInput->getKey(e_KEYBOARD, sf::Keyboard::LShift);
+			controls[0].Heavy = hInput->getKey(e_KEYBOARD, sf::Keyboard::LControl);
 
 			controls[1].Left = hInput->getKey(e_KEYBOARD, sf::Keyboard::D);
 			controls[1].Right = hInput->getKey(e_KEYBOARD, sf::Keyboard::A);
 			controls[1].Up = hInput->getKey(e_KEYBOARD, sf::Keyboard::S);
-			controls[1].Weak = hInput->getKey(e_KEYBOARD, sf::Keyboard::Q);
-			controls[1].Heavy = hInput->getKey(e_KEYBOARD, sf::Keyboard::E);
+			controls[1].Weak = hInput->getKey(e_KEYBOARD, sf::Keyboard::LControl);
+			controls[1].Heavy = hInput->getKey(e_KEYBOARD, sf::Keyboard::LShift);
 
 			currentControls = &controls[0];
 			break;
@@ -85,11 +85,7 @@ void Player::Update(InputHandler* hInput) {
 	else if (flipped == false && needFlipped == true){
 		PlayerTex();
 	}
-	//if(attackDelay > 0) {
-	//	--attackDelay;
-	//} else if(attackDelay == 0 && attacking != e_NO_ATTACK) {
-	//	attacking = e_NO_ATTACK;
-	//}
+	
 	if(AttackTimer.getElapsedTime() >= sf::seconds(ATTACK_DELAY)) {
 		attackType = e_NO_ATTACK;
 	}

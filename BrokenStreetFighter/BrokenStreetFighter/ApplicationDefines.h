@@ -30,9 +30,9 @@ struct AABB {
 #define CONTROL_LAYOUTS				2
 #define GRAVITY						2
 #define FRICTION					1
-#define AIR_RESISTANCE				0.1
+#define AIR_RESISTANCE				0.02
 #define MOVE_SPEED					7.5
-#define JUMP_SPEED					20
+#define JUMP_SPEED					30
 #define KNOCKBACK_WEAK_X			10
 #define KNOCKBACK_WEAK_Y			-5
 #define KNOCKBACK_HEAVY_X			15

@@ -15,7 +15,7 @@ Application::~Application() {
 }
 
 void Application::Run() {
-	sf::RenderWindow window(sf::VideoMode(RESOLUTION_X, RESOLUTION_Y), "PLACEHOLDER", sf::Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode(RESOLUTION_X, RESOLUTION_Y), "Lol", sf::Style::Fullscreen);
 	//sf::RenderWindow window(sf::VideoMode(RESOLUTION_X, RESOLUTION_Y), "PLACEHOLDER");
 	window.setFramerateLimit(60);
 
@@ -46,7 +46,6 @@ void Application::InitialiseText() {
 	if(!MainFont.loadFromFile("bin/Fonts/joystix_monospace.ttf")) {
 		// FREAK OUT
 	}
-	//SetText(&GameLogo, MainFont, "Malfunction", sf::Color::White, sf::Vector2f(0,0), 75);
 
 	// START SCREEN
 	GameLogo.setFont(MainFont);
