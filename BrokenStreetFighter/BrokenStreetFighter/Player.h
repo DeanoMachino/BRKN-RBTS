@@ -23,9 +23,10 @@ public:
 	void DepleteHealth(e_AttackType at);
 
 	AABB boundingBox;
-	e_AttackType attacking;
-	//bool justAttacked;
-	float attackDelay;
+	e_AttackType attackType;
+	sf::Clock AttackTimer;
+	bool isAttacking;
+	//float attackDelay;
 	bool dead;
 
 protected:

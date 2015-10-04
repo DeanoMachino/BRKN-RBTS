@@ -16,15 +16,21 @@ bool Player::Initialise(InputHandler* hInput, int i, sf::Vector2f p) {
 	Position = p;
 	Width = 52;
 	Height = 52;
-	inAir = false;
-	attacking = e_NO_ATTACK;
-	attackDelay = 0;
+	velocity = sf::Vector2f(0.0f, 0.0f);
+
 	health = 100;
-	knockback = false;
-	layout = 0;
 	dead = false;
+	inAir = false;
+
+	isAttacking = false;
+	attackType = e_NO_ATTACK;
+	AttackTimer.restart();
+	knockback = false;
+
+	layout = 0;
 
 	InitialiseControls(hInput, i);
+	Update(hInput);
 	return true;
 }
 
@@ -64,10 +70,13 @@ void Player::InitialiseControls(InputHandler* hInput, int i) {
 }
 
 void Player::Update(InputHandler* hInput) {
-	if(attackDelay > 0) {
-		--attackDelay;
-	} else if(attackDelay == 0 && attacking != e_NO_ATTACK) {
-		attacking = e_NO_ATTACK;
+	//if(attackDelay > 0) {
+	//	--attackDelay;
+	//} else if(attackDelay == 0 && attacking != e_NO_ATTACK) {
+	//	attacking = e_NO_ATTACK;
+	//}
+	if(AttackTimer.getElapsedTime() >= sf::seconds(ATTACK_DELAY)) {
+		attackType = e_NO_ATTACK;
 	}
 
 	HandleInput(hInput);
@@ -87,9 +96,9 @@ void Player::ChangeControls(InputHandler* hInput) {
 void Player::Knockback(e_Direction d, e_AttackType at) {
 	sf::Vector2f strength;
 	if(at == e_WEAK) {
-		strength = sf::Vector2f(20, -10);
+		strength = sf::Vector2f(KNOCKBACK_WEAK_X, KNOCKBACK_WEAK_Y);
 	} else {
-		strength = sf::Vector2f(30, -15);
+		strength = sf::Vector2f(KNOCKBACK_HEAVY_X, KNOCKBACK_HEAVY_Y);
 	}
 
 	if(d == e_LEFT) {
@@ -225,15 +234,19 @@ void Player::Jump() {
 
 void Player::Attack(e_AttackType at) {
 	// Attack
-	if(attackDelay <= 0) {
-		//justAttacked = true;
-		attackDelay = 60;
+	if(AttackTimer.getElapsedTime() >= sf::seconds(ATTACK_DELAY) && !isAttacking) {
+		isAttacking = true;
+		AttackTimer.restart();
 		if(at == e_WEAK) {
-			attacking = e_WEAK;
+			attackType = e_WEAK;
 			// weak attack stuff
 		} else {
-			attacking = e_HEAVY;
+			attackType = e_HEAVY;
 			// heavy attack stuff
 		}
 	}
+	//if(attackDelay <= 0) {
+		//justAttacked = true;
+		//attackDelay = 60;
+	//}
 }

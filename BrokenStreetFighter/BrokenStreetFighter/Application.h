@@ -25,6 +25,7 @@ protected:
 
 private:
 	void Initialise();
+	void InitialiseText();
 
 	void ManageEvents(sf::RenderWindow* window);
 	void Process(sf::RenderWindow* window);
@@ -32,6 +33,8 @@ private:
 
 	void DetectCollisions();
 	bool GetCollision(Player p1, Player p2);
+
+	void SetText(sf::Text* text, sf::Font font, const sf::String string, sf::Color color, sf::Vector2f position, float charSize);
 
 	InputHandler hInput;
 
@@ -42,8 +45,22 @@ private:
 
 	bool fullscreen;
 	
+	sf::Clock StartTimer;
+	bool gameStarted;
+
+	sf::Clock ControlChangeTimer;
+
 	sf::Clock frameClock;
 	sf::Time frameTime;
+
+	sf::Font MainFont;
+	sf::Text GameLogo;
+	sf::Text StartScreenInfo1;
+
+	sf::Text CountdownText;
+	sf::Text TimerText;
+	sf::Text Player1Text;
+	sf::Text Player2Text;
 };
 
 #endif
