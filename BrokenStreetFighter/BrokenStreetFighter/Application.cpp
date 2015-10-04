@@ -53,8 +53,14 @@ void Application::InitialiseText() {
 	GameLogo.setFont(MainFont);
 	GameLogo.setColor(sf::Color::White);
 	GameLogo.setCharacterSize(75);
-	GameLogo.setString("PLACEHOLDER");
+	GameLogo.setString("BRKN RBTS");
 	GameLogo.setPosition((RESOLUTION_X / 2) - (GameLogo.getGlobalBounds().width / 2), RESOLUTION_Y / 4);
+
+	TeamText.setFont(MainFont);
+	TeamText.setColor(sf::Color::White);
+	TeamText.setCharacterSize(50);
+	TeamText.setString("Team Placeholder");
+	TeamText.setPosition((RESOLUTION_X / 2) - (TeamText.getGlobalBounds().width / 2), RESOLUTION_Y * 0.6);
 
 	StartScreenInfo1.setFont(MainFont);
 	StartScreenInfo1.setColor(sf::Color::White);
@@ -85,10 +91,24 @@ void Application::InitialiseText() {
 
 	Player2Text.setFont(MainFont);
 	Player2Text.setColor(sf::Color::Black);
-	Player2Text.setCharacterSize(25);
-	Player2Text.setString("Player 2");
+	Player2Text.setCharacterSize(40);
+	Player2Text.setString("100");
 	Player2Text.setPosition((RESOLUTION_X - (Player2Text.getGlobalBounds().width)), 0);
 	Player2Text.setStyle(sf::Text::Bold);
+
+	Player1Health.setFont(MainFont);
+	Player1Health.setColor(sf::Color::White);
+	Player1Health.setCharacterSize(40);
+	Player1Health.setString("100");
+	Player1Health.setPosition(50, 50);
+	Player1Health.setStyle(sf::Text::Bold);
+
+	Player2Health.setFont(MainFont);
+	Player2Health.setColor(sf::Color::White);
+	Player2Health.setCharacterSize(40);
+	Player2Health.setString("100");
+	Player2Health.setPosition((RESOLUTION_X - (Player2Health.getGlobalBounds().width)) - 50, 50);
+	Player2Health.setStyle(sf::Text::Bold);
 
 	// END SCREEN
 	WinnerText.setFont(MainFont);
@@ -225,6 +245,7 @@ void Application::Render(sf::RenderWindow* window) {
 		
 			// Render UI
 			window->draw(GameLogo);
+			window->draw(TeamText);
 			window->draw(StartScreenInfo1);
 
 			break;
@@ -248,6 +269,13 @@ void Application::Render(sf::RenderWindow* window) {
 				}
 			}
 
+			Player1Health.setString(std::to_string(Players[0].health));
+			Player1Health.setPosition(50, 50);
+			Player2Health.setString(std::to_string(Players[1].health));
+			Player2Health.setPosition((RESOLUTION_X - (Player2Health.getGlobalBounds().width)) - 50, 50);
+
+			window->draw(Player1Health);
+			window->draw(Player2Health);
 			//window->draw(TimerText);
 			//window->draw(Player1Text);
 			//window->draw(Player2Text);

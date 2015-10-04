@@ -56,6 +56,7 @@ private:
 	sf::Font MainFont;
 	sf::Text GameLogo;
 	sf::Text StartScreenInfo1;
+	sf::Text TeamText;
 
 	sf::Text CountdownText;
 	sf::Text TimerText;
@@ -63,6 +64,8 @@ private:
 	sf::Text Player2Text;
 
 	sf::Text WinnerText;
+	sf::Text Player1Health;
+	sf::Text Player2Health;
 };
 
 #endif

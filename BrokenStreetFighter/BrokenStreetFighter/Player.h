@@ -32,6 +32,7 @@ public:
 	sf::Clock AttackTimer;
 	bool isAttacking;
 	bool dead;
+	int health;
 
 protected:
 
@@ -56,7 +57,6 @@ private:
 
 	bool inAir;
 	bool knockback;
-	int health;
 };
 
 #endif
