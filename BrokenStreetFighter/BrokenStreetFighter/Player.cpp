@@ -85,6 +85,7 @@ void Player::Update(InputHandler* hInput) {
 	else if (flipped == false && needFlipped == true){
 		PlayerTex();
 	}
+
 	if(AttackTimer.getElapsedTime() >= sf::seconds(ATTACK_DELAY)) {
 		attackType = e_NO_ATTACK;
 	}
