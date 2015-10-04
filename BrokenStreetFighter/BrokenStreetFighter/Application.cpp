@@ -33,6 +33,7 @@ void Application::Initialise() {
 	winState = e_ONGOING;
 	gameStarted = false;
 	Background.SetupStaticSprite(sf::Vector2f(10,10));
+	Background.background.setPosition(-20, 0);
 	Players[0].SetUpSprite();
 	Players[0].flipped = false;
 	Players[0].Initialise(&hInput, 0, sf::Vector2f(PLAYER_1_START, FLOOR_Y));
@@ -63,28 +64,31 @@ void Application::InitialiseText() {
 
 	// IN GAME
 	CountdownText.setFont(MainFont);
-	CountdownText.setColor(sf::Color::White);
+	CountdownText.setColor(sf::Color::Black);
 	CountdownText.setCharacterSize(100);
 	CountdownText.setString("3");
-	CountdownText.setPosition((RESOLUTION_X / 2) - (CountdownText.getGlobalBounds().width / 2), RESOLUTION_Y / 2);
+	CountdownText.setStyle(sf::Text::Bold);
 
 	TimerText.setFont(MainFont);
-	TimerText.setColor(sf::Color::White);
+	TimerText.setColor(sf::Color::Black);
 	TimerText.setCharacterSize(40);
 	TimerText.setString("00");
 	TimerText.setPosition((RESOLUTION_X / 2) - (TimerText.getGlobalBounds().width / 2), 0);
+	TimerText.setStyle(sf::Text::Bold);
 
 	Player1Text.setFont(MainFont);
-	Player1Text.setColor(sf::Color::White);
+	Player1Text.setColor(sf::Color::Black);
 	Player1Text.setCharacterSize(25);
 	Player1Text.setString("Player 1");
 	Player1Text.setPosition(10, 0);
+	Player1Text.setStyle(sf::Text::Bold);
 
 	Player2Text.setFont(MainFont);
-	Player2Text.setColor(sf::Color::White);
+	Player2Text.setColor(sf::Color::Black);
 	Player2Text.setCharacterSize(25);
 	Player2Text.setString("Player 2");
 	Player2Text.setPosition((RESOLUTION_X - (Player2Text.getGlobalBounds().width)), 0);
+	Player2Text.setStyle(sf::Text::Bold);
 
 	// END SCREEN
 	WinnerText.setFont(MainFont);
@@ -227,6 +231,7 @@ void Application::Render(sf::RenderWindow* window) {
 		case e_INGAME:
 			// Render background
 			window->draw(Background.background);
+
 			// Render foreground
 			for(int i = 0; i < PLAYER_COUNT; ++i) {
 				Players[i].animatedSprite.update(frameTime);
@@ -237,15 +242,15 @@ void Application::Render(sf::RenderWindow* window) {
 			if(!gameStarted) {
 				int count = 4 - StartTimer.getElapsedTime().asSeconds();
 				CountdownText.setString(std::to_string(count));
-				CountdownText.setPosition((RESOLUTION_X / 2) - (CountdownText.getGlobalBounds().width / 2), RESOLUTION_Y * 0.35);
+				CountdownText.setPosition((RESOLUTION_X / 2) - (CountdownText.getGlobalBounds().width / 2), RESOLUTION_Y * 0.7);
 				if(count != 0) {
 					window->draw(CountdownText);
 				}
 			}
 
-			window->draw(TimerText);
-			window->draw(Player1Text);
-			window->draw(Player2Text);
+			//window->draw(TimerText);
+			//window->draw(Player1Text);
+			//window->draw(Player2Text);
 
 			break;
 		case e_END:
@@ -281,7 +286,7 @@ void Application::LocationComparison(){
 
 void Application::DetectCollisions() {
 	if(GetCollision(Players[0], Players[1])) {		// If collision
-		if(Players[0].isAttacking && Players[0].attackType != e_NO_ATTACK) {
+		if(Players[0].isAttacking && Players[0].attackType != e_NO_ATTACK && (Players[0].AttackTimer.getElapsedTime() >= sf::seconds(0.35) && Players[0].AttackTimer.getElapsedTime() <= sf::seconds(0.4))) {
 			// Damage enemy player
 			Players[1].DepleteHealth(Players[0].attackType);
 			// Knock player back
@@ -292,7 +297,7 @@ void Application::DetectCollisions() {
 			}
 			Players[0].isAttacking = false;
 		}
-		if(Players[1].isAttacking && Players[1].attackType != e_NO_ATTACK) {
+		if(Players[1].isAttacking && Players[1].attackType != e_NO_ATTACK && Players[1].AttackTimer.getElapsedTime() >= sf::seconds(0.35)) {
 			// Damage enemy player
 			Players[0].DepleteHealth(Players[1].attackType);
 			// Knock player back

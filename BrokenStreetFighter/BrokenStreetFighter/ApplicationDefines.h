@@ -38,14 +38,14 @@ struct AABB {
 #define KNOCKBACK_HEAVY_X			15
 #define KNOCKBACK_HEAVY_Y			-7.5
 
-#define PLAYER_1_START				400
-#define PLAYER_2_START				800
-
 #define RESOLUTION_X				1400
 #define RESOLUTION_Y				768
-#define STAGE_MIN					10
-#define STAGE_MAX					RESOLUTION_X - 10
-#define FLOOR_Y						RESOLUTION_Y - 50
+#define STAGE_MIN					40
+#define STAGE_MAX					RESOLUTION_X - 40
+#define FLOOR_Y						RESOLUTION_Y
+
+#define PLAYER_1_START				STAGE_MIN + 200
+#define PLAYER_2_START				STAGE_MAX - 200
 
 #define START_COUNTDOWN				3
 #define	CONTROL_CHANGE_DELAY		10
