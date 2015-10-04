@@ -67,6 +67,7 @@ protected:
 	
 
 	bool scaleSet;
+	bool scaleSet2;
 };
 
 #endif

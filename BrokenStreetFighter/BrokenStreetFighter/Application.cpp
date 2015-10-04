@@ -187,7 +187,7 @@ void Application::Process(sf::RenderWindow* window) {
 				else if (Players[1].dead) {
 					Players[1].DEAD();
 				}
-				if (DeathTimer.getElapsedTime() >= sf::seconds(3)){
+				if (DeathTimer.getElapsedTime() >= sf::seconds(1.5)){
 					currentState = e_END;
 				}
 				
