@@ -8,6 +8,7 @@
 
 GameObj::GameObj(){
 	SetTexture();
+	scaleSet = false;
 }
 
 GameObj::~GameObj(){
@@ -39,7 +40,10 @@ void GameObj::PlayerTexFlipped(){
 void GameObj::SetUpSprite(){
 	//AnimatedSprite animatedSprite();
 	animatedSprite.setFrameTime(sf::seconds(0.1));
-	animatedSprite.scale(4, 4);
+	if(!scaleSet) {
+		animatedSprite.scale(4, 4);
+		scaleSet = true;
+	}
 	animatedSprite.pause();
 	animatedSprite.setLooped(true);
 	animatedSprite.setPosition(Position);
