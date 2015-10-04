@@ -30,6 +30,7 @@ public:
 	bool collide;
 	bool animated;
 	bool flipped;
+	bool needFlipped;
 
 	void SetTexture();
 

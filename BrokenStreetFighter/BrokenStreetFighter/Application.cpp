@@ -34,10 +34,11 @@ void Application::Initialise() {
 
 	Players[0].SetUpSprite();
 	Players[0].flipped = false;
-	Players[0].Initialise(&hInput, 0, sf::Vector2f(400, 500));
+	Players[0].Initialise(&hInput, 0, sf::Vector2f(400, 400));
 	Players[1].SetUpSprite();
+	Players[1].PlayerTexFlipped();
 	Players[1].flipped = true;
-	Players[1].Initialise(&hInput, 1, sf::Vector2f(800, 500));
+	Players[1].Initialise(&hInput, 1, sf::Vector2f(800, 400));
 }
 
 void Application::ManageEvents(sf::RenderWindow* window) {
@@ -198,10 +199,13 @@ void Application::LocationComparison(){
 	if (x_a > x_b && (Players[0].flipped == false && Players[1].flipped == true)){
 		Players[0].flipped = true;
 		Players[1].flipped = false;
-		//Players[1].NeedFliped=
+		Players[0].needFlipped = true;
+		Players[1].needFlipped = true;
 	}
 	else if (x_a < x_b && (Players[0].flipped == true && Players[1].flipped == false)){
 		Players[0].flipped = false;
 		Players[1].flipped = true;
+		Players[0].needFlipped = true;
+		Players[1].needFlipped = true;
 	}
 }

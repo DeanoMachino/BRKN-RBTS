@@ -18,7 +18,11 @@ bool Player::Initialise(InputHandler* hInput, int i, sf::Vector2f p) {
 	Height = 52;
 	inAir = false;
 	attacking = false;
+	isPunchingW = false;
+	isPunchingH = false;
+	TimerStart = false;
 	layout = 0;
+	time = 0;
 	InitialiseControls(hInput, i);
 	return true;
 }
@@ -59,10 +63,20 @@ void Player::InitialiseControls(InputHandler* hInput, int i) {
 }
 
 void Player::Update(InputHandler* hInput, int id) {
-	/*if (flipped = true){
+	
+	if (animatedSprite.m_currentFrame >= 5 && isPunchingH == true){
+		isPunchingH = false;
+	}
+	if (animatedSprite.m_currentFrame >= 4 && isPunchingW == true){
+		isPunchingW = false;
+	}
+	
+	if (flipped == true && needFlipped == true){
 		PlayerTexFlipped();
 	}
-	else PlayerTex();*/
+	else if (flipped == false && needFlipped == true){
+		PlayerTex();
+	}
 	HandleInput(hInput,id);
 	RepositionPlayer();
 	animatedSprite.play(*currentAnimation);
@@ -89,31 +103,39 @@ void Player::HandleInput(InputHandler* hInput, int id) {
 	// MOVE LEFT
 	if(currentControls->Left->pressed) {
 		Move(e_LEFT);
-		//if (id == 0){
-	//		currentAnimation = &walkBackwardsAni;
-		//}
-		//if (id == 1){
-		//	currentAnimation = &walkFowardAni;
+		if (flipped == true && (isPunchingW == false || isPunchingH == false)){
+			currentAnimation = &walkFowardAni;
+		}
+		else currentAnimation = &walkBackwardsAni;
 
-		//}
 	}
 	// MOVE RIGHT
 	else if(currentControls->Right->pressed) {
 		Move(e_RIGHT);
-		currentAnimation = &walkFowardAni; 
+		if (flipped == true && (isPunchingW == false || isPunchingH == false)){
+			currentAnimation = &walkBackwardsAni;
+		}
+		else currentAnimation = &walkFowardAni;
 	}
 	// WEAK ATTACK
 	else if(currentControls->Weak->pressed && currentControls->Weak->changed) {
 		Attack(e_WEAK);
 		currentAnimation = &lightPunchAni;
-
+		isPunchingW = true;
+		TimerStart = true;
 	}
 	// HEAVY ATTACK
 	else if(currentControls->Heavy->pressed && currentControls->Heavy->changed) {
 		Attack(e_HEAVY);
 		currentAnimation = &hardPunchAni;
+		isPunchingH = true;
+		TimerStart = true;
 	}
-	else currentAnimation = &idleAni;
+	else {
+		if (isPunchingW == false && isPunchingH == false){
+			currentAnimation = &idleAni;
+		}
+	}
 }
 
 void Player::RepositionPlayer() {

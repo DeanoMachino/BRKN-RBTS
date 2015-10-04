@@ -15,11 +15,14 @@ public:
 	Player();
 	~Player();
 	
-	
+	int time;
+	bool TimerStart;
 	bool Initialise(InputHandler* hInput, int i, sf::Vector2f p);
-	
 	void Update(InputHandler* hInput,int id);
 	void ChangeControls(InputHandler* hInput);
+	bool isPunchingW;
+	bool isPunchingH;
+	
 
 protected:
 

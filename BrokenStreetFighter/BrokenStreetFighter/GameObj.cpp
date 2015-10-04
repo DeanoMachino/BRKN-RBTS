@@ -28,15 +28,18 @@ void GameObj::SetTexture(){
 
 void GameObj::PlayerTex(){
 	SetAnimations(&playertexture);
+	needFlipped = false;
 }
 
 void GameObj::PlayerTexFlipped(){
 	SetAnimations(&playertextureFlipped);
+	needFlipped = false;
 }
 
 void GameObj::SetUpSprite(){
 	//AnimatedSprite animatedSprite();
 	animatedSprite.setFrameTime(sf::seconds(0.1));
+	animatedSprite.scale(4, 4);
 	animatedSprite.pause();
 	animatedSprite.setLooped(true);
 	animatedSprite.setPosition(Position);
@@ -100,10 +103,9 @@ void GameObj::SetAnimations(sf::Texture* texture){
 	deathAni.addFrame(sf::IntRect(208, 312, 52, 52));
 	deathAni.addFrame(sf::IntRect(260, 312, 52, 52));
 	deathAni.addFrame(sf::IntRect(0, 364, 52, 52));
-	deathAni.addFrame(sf::IntRect(0, 364, 52, 52));
-	deathAni.addFrame(sf::IntRect(0, 364, 52, 52));
-	deathAni.addFrame(sf::IntRect(0, 364, 52, 52));
-	deathAni.addFrame(sf::IntRect(0, 364, 52, 52));
+	deathAni.addFrame(sf::IntRect(52, 364, 52, 52));
+	deathAni.addFrame(sf::IntRect(104, 364, 52, 52));
+	
 	
 
 

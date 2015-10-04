@@ -29,7 +29,7 @@ struct ControlLayout {
 #define MOVE_SPEED			7.5
 #define JUMP_SPEED			20
 
-#define FLOOR_Y				600
+#define FLOOR_Y				400
 #define RESOLUTION_X		1024
 #define RESOLUTION_Y		768
 
